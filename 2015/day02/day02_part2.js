@@ -11,7 +11,7 @@ for (const box of lengths) {
 	const w = box[1];
 	const h = box[2];
 
-	sum += 2 * l * w + 2 * w * h + 2 * h * l + min * med;
+	sum += l * w * h + 2 * min + 2 * med;
 }
 
 console.log(sum);

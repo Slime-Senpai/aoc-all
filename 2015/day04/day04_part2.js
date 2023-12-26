@@ -12,7 +12,7 @@ MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};funct
 let n = 0;
 while (true) {
 	const md = MD5(inputText + n);
-	if (md.substring(0, 5) === '00000') {
+	if (md.substring(0, 6) === '000000') {
 		break;
 	}
 	n++;

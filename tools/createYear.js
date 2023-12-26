@@ -29,19 +29,15 @@ for (let i = 1; i < 26; i++) {
 	fs.mkdirSync(pathToDay);
 
 	// Create the empty input file
-	// We'll create it with a \n to tell the IDE that it's an LF file
-	fs.writeFileSync(`${pathToDay}/day${dayNumber}_input.txt`, '\n', { encoding: 'utf-8' });
+	fs.writeFileSync(`${pathToDay}/day${dayNumber}_input.txt`, '', { encoding: 'utf-8' });
 
 	// Create the empty example file
-	// We'll create it with a \n to tell the IDE that it's an LF file
-	fs.writeFileSync(`${pathToDay}/day${dayNumber}_example.txt`, '\n', { encoding: 'utf-8' });
+	fs.writeFileSync(`${pathToDay}/day${dayNumber}_example.txt`, '', { encoding: 'utf-8' });
 
 	// Create the base template for the part1
-	fs.writeFileSync(
-		`${pathToDay}/day${dayNumber}_part1.js`,
-		templateData.replace('{{inputFile}}', `day${dayNumber}_example.txt`),
-		{ encoding: 'utf-8' }
-	);
+	fs.writeFileSync(`${pathToDay}/day${dayNumber}_part1.js`, templateData.replace('{{inputFile}}', `day${dayNumber}_example.txt`), {
+		encoding: 'utf-8'
+	});
 }
 
 console.log('DONE');
