@@ -14,7 +14,7 @@ const instructions = inputText.split('\n').map((e) => {
 	};
 });
 
-const map = new Array(1000).fill(0).map((_) => new Array(1000).fill(false));
+const map = new Array(1000).fill(0).map((_) => new Array(1000).fill(0));
 
 for (const current of instructions) {
 	switch (current.instruction) {
@@ -30,12 +30,12 @@ for (const current of instructions) {
 	}
 }
 
-console.log(map.reduce((a, b) => a + b.reduce((c, d) => +c + +d), 0));
+console.log(map.reduce((a, b) => a + b.reduce((c, d) => c + d), 0));
 
 function handleTurnOff(current) {
 	for (let i = current.topLeftCorner[0]; i <= current.bottomRightCorner[0]; ++i) {
 		for (let j = current.topLeftCorner[1]; j <= current.bottomRightCorner[1]; j++) {
-			map[i][j] = false;
+			map[i][j] = Math.max(0, map[i][j] - 1);
 		}
 	}
 }
@@ -43,7 +43,7 @@ function handleTurnOff(current) {
 function handleTurnOn(current) {
 	for (let i = current.topLeftCorner[0]; i <= current.bottomRightCorner[0]; ++i) {
 		for (let j = current.topLeftCorner[1]; j <= current.bottomRightCorner[1]; j++) {
-			map[i][j] = true;
+			map[i][j] += 1;
 		}
 	}
 }
@@ -51,7 +51,7 @@ function handleTurnOn(current) {
 function handleToggle(current) {
 	for (let i = current.topLeftCorner[0]; i <= current.bottomRightCorner[0]; ++i) {
 		for (let j = current.topLeftCorner[1]; j <= current.bottomRightCorner[1]; j++) {
-			map[i][j] = !map[i][j];
+			map[i][j] += 2;
 		}
 	}
 }
