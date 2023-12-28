@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const inputText = fs.readFileSync('./day11_input.txt', { encoding: 'utf-8' });
+const inputText = fs.readFileSync('./day11_input_part2.txt', { encoding: 'utf-8' });
 
 const firstRequirement = (password) => {
 	for (let i = 2; i < password.length; i++) {
@@ -29,28 +29,6 @@ const thirdRequirement = (password) => {
 const goodAlphabet = 'abcdefghjkmnpqrstuvwxyz';
 
 let currentPassword = inputText;
-while (!firstRequirement(currentPassword) || !thirdRequirement(currentPassword)) {
-	let newPassword = '';
-	let changeNext = true;
-	for (let i = currentPassword.length - 1; i >= 0; --i) {
-		if (!changeNext) {
-			newPassword = currentPassword[i] + newPassword;
-			continue;
-		}
-		let indexOfNewLetter = goodAlphabet.indexOf(currentPassword[i]) + 1;
-		if (indexOfNewLetter === goodAlphabet.length) {
-			indexOfNewLetter = 0;
-			changeNext = true;
-		} else {
-			changeNext = false;
-		}
-		newPassword = goodAlphabet[indexOfNewLetter] + newPassword;
-	}
-	currentPassword = newPassword;
-}
-
-console.log(currentPassword);
-
 while (!firstRequirement(currentPassword) || !thirdRequirement(currentPassword)) {
 	let newPassword = '';
 	let changeNext = true;

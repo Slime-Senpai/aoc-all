@@ -48,4 +48,4 @@ for (let i = 0; i < cities.length; ++i) {
 	currentSteps = newSteps;
 }
 
-console.log(currentSteps.sort((a, b) => a.distance - b.distance)[0].distance);
+console.log(currentSteps.sort((a, b) => b.distance - a.distance)[0].distance);

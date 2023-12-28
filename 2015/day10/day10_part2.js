@@ -3,7 +3,7 @@ const fs = require('fs');
 const inputText = fs.readFileSync('./day10_input.txt', { encoding: 'utf-8' });
 
 let currentString = inputText;
-for (let i = 0; i < 40; i++) {
+for (let i = 0; i < 50; i++) {
 	let newString = '';
 	let currentDigit = currentString[0];
 	let nbDigit = 1;
