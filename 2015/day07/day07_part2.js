@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const inputText = fs.readFileSync('./day07_input.txt', { encoding: 'utf-8' });
+const inputText = fs.readFileSync('./day07_input_part2.txt', { encoding: 'utf-8' });
 
 class Node {
 	/**

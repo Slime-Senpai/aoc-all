@@ -1,8 +1,15 @@
 123 -> x
 456 -> y
+a AND x -> ax
 x AND y -> d
 x OR y -> e
 x LSHIFT 2 -> f
 y RSHIFT 2 -> g
 NOT x -> h
 NOT y -> i
+NOT ac -> ca
+a RSHIFT 3 -> ac
+NOT ac -> cb
+NOT cb -> cz
+f AND g -> a
+a RSHIFT 3 -> az
