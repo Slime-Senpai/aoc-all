@@ -9,14 +9,28 @@ const safeReports = reports.filter(report => {
 
     let lastLevel = report[0];
 
+    let hasDampened = false;
+
     for (const level of report.slice(1)) {
         if ((isDown && level > lastLevel) || (!isDown && level < lastLevel)) {
+            if (!hasDampened) {
+                hasDampened = true;
+
+                continue;
+            }
+
             return false;
         }
 
         const diff = Math.abs(level - lastLevel);
 
         if (diff < 1 || diff > 3) {
+            if (!hasDampened) {
+                hasDampened = true;
+
+                continue;
+            }
+
             return false;
         }
 
