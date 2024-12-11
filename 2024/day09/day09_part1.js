@@ -1,11 +1,10 @@
 const fs = require('fs');
 
-const inputText = fs.readFileSync('./day09_example.txt', { encoding: 'utf-8' });
+const inputText = fs.readFileSync('./day09_input.txt', { encoding: 'utf-8' });
 
 const filesAndSpaces = inputText.split('').map((e) => +e);
 
 let currentForward = 0;
-let currentBackwards = filesAndSpaces.length - 1;
 
 let currentIndex = 0;
 
@@ -15,39 +14,54 @@ while (currentForward < filesAndSpaces.length) {
 
 	if (currentForward % 2 === 0) {
 		// File
-		checksum += sumOfNumbersFromXtoY(currentIndex, currentIndex + current) * current;
+		const fileChecksum = sumOfNumbersFromXtoY(currentIndex, currentIndex + current) * (currentForward / 2);
+		checksum += fileChecksum;
+
 		currentIndex += current;
+		currentForward++;
 	} else {
 		// Space
-		const lastFileLength = filesAndSpaces[currentBackwards];
+		const lastFileIndex = (filesAndSpaces.length - 1) / 2;
+		const lastFileLength = filesAndSpaces.at(-1);
 
-		if (isConsumed) {
-			const newLast = filesAndSpaces[currentBackwards];
+		const { spaceLeft, lastFileChecksum, nbSpacesUsed } = handleLastFile(currentIndex, current, lastFileLength, lastFileIndex);
+
+		currentIndex += nbSpacesUsed;
+
+		checksum += lastFileChecksum;
+
+		if (spaceLeft > 0) {
+			// Pop file
+			filesAndSpaces.pop();
+			// Pop space
+			filesAndSpaces.pop();
+
+			filesAndSpaces[currentForward] = spaceLeft;
+		} else {
+			currentForward++;
+			filesAndSpaces[filesAndSpaces.length - 1] = lastFileLength - nbSpacesUsed;
 		}
 	}
 }
 
-function handleLastFile(currentIndex, current, lastFileLength) {
-	const isConsumed = current >= lastFileLength;
+console.log(checksum);
 
-	const afterConsume = current - lastFileLength;
+function handleLastFile(currentIndex, current, lastFileLength, lastFileIndex) {
+	const nbSpacesUsed = Math.min(current, lastFileLength);
 
-	const checksum = sumOfNumbersFromXtoY();
+	const spaceLeft = current - nbSpacesUsed;
 
-	if (isConsumed) {
-		filesAndSpaces.pop();
-		currentBackwards--;
-	} else {
-	}
+	const lastFileChecksum = sumOfNumbersFromXtoY(currentIndex, currentIndex + nbSpacesUsed) * lastFileIndex;
 
 	return {
-		isConsumed,
-		afterConsume,
-		checksum,
-		newIndex: currentIndex + lastFileLength - afterConsume
+		spaceLeft,
+		lastFileChecksum,
+		nbSpacesUsed
 	};
 }
 
 function sumOfNumbersFromXtoY(x, y) {
-	return (y - x) * ((x + y) / 2);
+	const sum = (y - x) * ((x + y - 1) / 2);
+
+	return sum;
 }
