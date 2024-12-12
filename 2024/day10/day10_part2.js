@@ -37,20 +37,17 @@ map.forEach((line, y) =>
 
 let totalTrails = 0;
 for (const start of starts) {
-	const trailheads = new Set(handleTrail(start));
+	const nbTrails = handleTrail(start);
 
-	totalTrails += trailheads.size;
+	totalTrails += nbTrails;
 }
 
 console.log(totalTrails);
 
 function handleTrail(currentTile) {
 	if (currentTile.level === 9) {
-		return [currentTile];
+		return 1;
 	}
 
-	return currentTile.next.reduce((a, b) => {
-		a.push(...handleTrail(b));
-		return a;
-	}, []);
+	return currentTile.next.reduce((a, b) => a + handleTrail(b), 0);
 }
