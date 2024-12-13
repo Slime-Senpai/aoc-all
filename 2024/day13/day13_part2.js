@@ -12,8 +12,8 @@ const claws = inputText.split('\n\n').map((e) => {
 		Ay: +matches[2],
 		Bx: +matches[3],
 		By: +matches[4],
-		X: +matches[5],
-		Y: +matches[6]
+		X: +matches[5] + 10000000000000,
+		Y: +matches[6] + 10000000000000
 	};
 });
 
