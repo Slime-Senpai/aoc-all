@@ -50,25 +50,3 @@ while (!firstRequirement(currentPassword) || !thirdRequirement(currentPassword))
 }
 
 console.log(currentPassword);
-
-while (!firstRequirement(currentPassword) || !thirdRequirement(currentPassword)) {
-	let newPassword = '';
-	let changeNext = true;
-	for (let i = currentPassword.length - 1; i >= 0; --i) {
-		if (!changeNext) {
-			newPassword = currentPassword[i] + newPassword;
-			continue;
-		}
-		let indexOfNewLetter = goodAlphabet.indexOf(currentPassword[i]) + 1;
-		if (indexOfNewLetter === goodAlphabet.length) {
-			indexOfNewLetter = 0;
-			changeNext = true;
-		} else {
-			changeNext = false;
-		}
-		newPassword = goodAlphabet[indexOfNewLetter] + newPassword;
-	}
-	currentPassword = newPassword;
-}
-
-console.log(currentPassword);
