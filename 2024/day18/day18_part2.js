@@ -2,7 +2,6 @@ const fs = require('fs');
 
 const inputText = fs.readFileSync('./day18_input.txt', { encoding: 'utf-8' });
 const length = 71;
-const nbFallDown = 1024;
 
 const directions = {
 	NORTH: { y: -1, x: 0 },
@@ -40,46 +39,63 @@ map.forEach((line) => {
 	});
 });
 
+let nbFallDown = 1024;
+
 for (let i = 0; i < nbFallDown; i++) {
 	const byte = bytes[i];
 
 	map[byte.y][byte.x].tile = '#';
 }
 
-// Time for A* again
-let start = map[0][0];
-let end = map[length - 1][length - 1];
+while (true) {
+	// very inefficient, we could binary search, but I'm lazy
+	nbFallDown++;
+	const newByteToFall = bytes[nbFallDown];
+	map[newByteToFall.y][newByteToFall.x].tile = '#';
 
-let openSet = [{ current: start, from: [] }];
-let closedSet = [];
+	map.forEach((e) => e.forEach((f) => (f.gScore = 0)));
 
-while (openSet.length > 0) {
-	const { current, from } = openSet.shift();
+	// Time for A* again
+	let start = map[0][0];
+	let end = map[length - 1][length - 1];
 
-	if (current === end) {
-		// printPath(from);
+	let openSet = [{ current: start, from: [] }];
+	let closedSet = [];
 
-		console.log([...from].length);
-		return;
+	let foundExit = false;
+	while (openSet.length > 0) {
+		const { current, from } = openSet.shift();
+
+		if (current === end) {
+			// printPath(from);
+
+			foundExit = true;
+			break;
+		}
+
+		closedSet.push(current);
+
+		for (const neighbor of current.neighbors) {
+			if (closedSet.includes(neighbor) || neighbor.tile === '#') {
+				continue;
+			}
+
+			const gScore = current.gScore + 1;
+
+			const isInOpen = openSet.some((e) => e.current === neighbor);
+
+			if (!isInOpen || gScore < neighbor.gScore) {
+				neighbor.gScore = gScore;
+
+				openSet.push({ current: neighbor, from: [...from, current] });
+				openSet.sort((a, b) => a.current.gScore - b.current.gScore);
+			}
+		}
 	}
 
-	closedSet.push(current);
-
-	for (const neighbor of current.neighbors) {
-		if (closedSet.includes(neighbor) || neighbor.tile === '#') {
-			continue;
-		}
-
-		const gScore = current.gScore + 1;
-
-		const isInOpen = openSet.some((e) => e.current === neighbor);
-
-		if (!isInOpen || gScore < neighbor.gScore) {
-			neighbor.gScore = gScore;
-
-			openSet.push({ current: neighbor, from: [...from, current] });
-			openSet.sort((a, b) => a.current.gScore - b.current.gScore);
-		}
+	if (!foundExit) {
+		console.log(newByteToFall.x + ',' + newByteToFall.y);
+		return;
 	}
 }
 
