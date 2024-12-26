@@ -60,17 +60,23 @@ while (current !== end) {
 
 const cheats = new Set();
 
+let nbForSave = new Map();
+
 for (const current of path) {
-	const nextAfterCheat = current.neighbors
-		.filter((e) => e.tile === '#')
-		.flatMap((n) => {
-			return n.neighbors.filter((e) => {
-				return e.nbPico >= current.nbPico + 2 + MIN_SAVE;
-			});
-		});
+	const nextAfterCheat = path.slice(current.nbPico + MIN_SAVE).filter((e) => {
+		const distance = Math.abs(current.x - e.x) + Math.abs(current.y - e.y);
+		return distance <= 20 && e.nbPico - current.nbPico - distance >= MIN_SAVE;
+	});
 
 	for (const next of nextAfterCheat) {
-		cheats.add(`${next.nbPico - current.nbPico - 2}|${current.x}-${current.y}|${next.x}-${next.y}`);
+		const distance = Math.abs(current.x - next.x) + Math.abs(current.y - next.y);
+		const key = next.nbPico - current.nbPico - distance;
+		if (nbForSave.has(key)) {
+			nbForSave.set(key, nbForSave.get(key) + 1);
+		} else {
+			nbForSave.set(key, 1);
+		}
+		cheats.add(`${next.nbPico - current.nbPico - distance}|${current.x}-${current.y}|${next.x}-${next.y}`);
 	}
 }
 
