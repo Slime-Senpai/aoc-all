@@ -1,6 +1,7 @@
-fn main() {
+pub fn main() {
     const INPUT: &str = include_str!("../inputs/day02_input.txt");
 
+    println!("Day 2");
     let before_part1 = std::time::Instant::now();
     println!("Part 1: {}", part1(INPUT));
     println!("Elapsed: {:?}", before_part1.elapsed());
@@ -80,14 +81,14 @@ fn part2(input: &str) -> u64 {
 }
 
 #[test]
-fn test_part1() {
+pub fn test_part1() {
     const EXAMPLE: &str = include_str!("../inputs/day02_example.txt");
 
     assert_eq!(part1(EXAMPLE), 1227775554, "The value should match");
 }
 
 #[test]
-fn test_part2() {
+pub fn test_part2() {
     const EXAMPLE: &str = include_str!("../inputs/day02_example.txt");
 
     assert_eq!(part2(EXAMPLE), 4174379265, "The value should match");

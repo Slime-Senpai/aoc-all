@@ -1,8 +1,13 @@
-fn main() {
+pub fn main() {
     const INPUT: &str = include_str!("../inputs/day01_input.txt");
 
-    println!("{}", get_nb_times_was_zero(&INPUT));
-    println!("{}", get_times_seen_zero(&INPUT));
+    println!("Day 1");
+    let before_part1 = std::time::Instant::now();
+    println!("Part 1: {}", part1(&INPUT));
+    println!("Elapsed: {:?}", before_part1.elapsed());
+    let before_part2 = std::time::Instant::now();
+    println!("Part 2: {}", part2(&INPUT));
+    println!("Elapsed: {:?}", before_part2.elapsed());
 }
 
 fn parse_input(input: &str) -> Vec<i32> {
@@ -20,7 +25,7 @@ fn parse_input(input: &str) -> Vec<i32> {
     }).collect();
 }
 
-fn get_nb_times_was_zero(input: &str) -> i32 {
+fn part1(input: &str) -> i32 {
     let mut nb_zero = 0;
     let mut curr: i32 = 50;
     parse_input(input).into_iter().for_each(|x| {
@@ -33,7 +38,7 @@ fn get_nb_times_was_zero(input: &str) -> i32 {
     return nb_zero;
 }
 
-fn get_times_seen_zero(input: &str) -> i32 {
+fn part2(input: &str) -> i32 {
     let mut nb_zero = 0;
     let mut curr: i32 = 50;
     parse_input(input).into_iter().for_each(|x| {
@@ -54,15 +59,15 @@ fn get_times_seen_zero(input: &str) -> i32 {
 }
 
 #[test]
-fn test_part1() {
+pub fn test_part1() {
     const EXAMPLE: &str = include_str!("../inputs/day01_example.txt");
 
-    assert_eq!(get_nb_times_was_zero(EXAMPLE), 3, "There should be 3 zeros for the part1 example");
+    assert_eq!(part1(EXAMPLE), 3, "There should be 3 zeros for the part1 example");
 }
 
 #[test]
-fn test_part2() {
+pub fn test_part2() {
     const EXAMPLE: &str = include_str!("../inputs/day01_example.txt");
 
-    assert_eq!(get_times_seen_zero(EXAMPLE), 6, "There should be 6 zeros for the part2 example");
+    assert_eq!(part2(EXAMPLE), 6, "There should be 6 zeros for the part2 example");
 }
