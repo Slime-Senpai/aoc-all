@@ -2,6 +2,6 @@
 name = "slime-aoc-25"
 version = "0.1.0"
 edition = "2024"
-default-run = "day02"
+default-run = "day03"
 
 [dependencies]
